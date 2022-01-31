@@ -450,6 +450,8 @@ let athlete5 = {name: "elmo", surname: "recalcati", position: 2};
 
 let athletes = [athlete1, athlete2, athlete3, athlete4, athlete5];
 
+// athletes.sort((ath1, ath2) => ath1.position - ath2.position);
+
 console.log(athletes.sort());
 
 
