@@ -229,51 +229,9 @@ console.log([...new Set(arrayOfVowels(string))].join(""));
 //reduce --> array delle vocali *******************************************************************
 
 
-// function vocali(...array1) {
-//     let result = [];
-//     for (let i = 0; i < array1.length; i++) {
-//         const element = array1[i];
-//         if (element === "a" || element === "e" || element === "i" || element === "o" || element === "u") {
-//             result.push(element)
-//         }
-    
-//     }
-//     return result;
-// }
-
-// console.log(array1.reduce(vocali));
 
 
 
-// function vowelArrays([...array]) {
-
-//     let vow = ["a", "e", "i", "o", "u"];
-//     let array2 = [];
-
-//     for (let i = 0; i < array.length; i++) {
-//         const vowel = array[i];
-//         if (vow.includes(vowel)) {
-//             array2.push(vowel);
-//         }
-//     }
-//     return array2;
-// }
-
-// console.log(vowelArrays(array1));
-
-
-// function fromStringToArrayOfVowels(string) {
-//     let arrayOfChar = [...string];
-//     let tempArray = [];
-//     let vow = ["a", "e", "i", "o", "u"];
-//     for (let i = 0; i < arrayOfChar.length; i++) {
-//         const character = arrayOfChar[i];
-//         if (vow.includes(character)) {
-//             tempArray.push(character)
-//         }
-//     }
-//     return tempArray;
-// }
 
 function fromStringToArrayOfVowels([...array]) {
     let tempArray = [];
@@ -299,45 +257,40 @@ console.log(array1.reduce(buildVowelArray, []));
 
 
 
-// function checkIfArrayContainsVowel(array) {
-//     let newArray = [];
-//     for (let i = 0; i < array.length; i++) {
-//         const char = array[i];
-
-//         if (char === "a") {
-//             newArray.push(char);        }
-//         if (char === "e") {
-//             newArray.push(char);        }
-//         if (char === "i") {
-//             newArray.push(char);        }
-//         if (char === "o") {
-//             newArray.push(char);        }
-//         if (char === "u") {
-//             newArray.push(char);        }
-//     }
-//     return newArray;
-// }
-
-
-// console.log(checkIfArrayContainsVowel([...array1])); 
-
-
-
-
-
-
 
 //reduce --> stringa con le consonanti senza ripetizione  --> cercare struttura dati SET (insieme) che non accetta duplicati, quindi trasformare l'array in set e poi trasformarlo in stringa
 
 
+let newArray1 = array1.map((e) => e.toLowerCase());
+
+function fromStringToArrayOfConsonants([...array]) {
+    let tempArray = [];
+    let vow = ["a", "e", "i", "o", "u"];
+    for (let i = 0; i < array.length; i++) {
+        const character = array[i];
+        if (!vow.includes(character)) {
+            tempArray.push(character)
+        }
+    }
+    return tempArray;
+}
 
 
+function buildConsonantArray(previous, current) {
+    previous.push(...fromStringToArrayOfConsonants(current));
+    return previous;
+}
 
 
+console.log("from string of consonants", fromStringToArrayOfConsonants([...newArray1]));
 
+let arrayOfConsonants = newArray1.reduce(buildConsonantArray, []);
 
+let setOfConsonants = new Set(arrayOfConsonants);
 
+let stringOfConsonants = [...setOfConsonants].join("");
 
+console.log(stringOfConsonants);
 
 
 
@@ -345,7 +298,81 @@ console.log(array1.reduce(buildVowelArray, []));
 ///////////////////////////////////////////////////////////////////////////////
 
 //map --> che cambia maiuscole in minuscole e viceversa ----> poi trasforma in reduce
+
+function arrayToUpperCase(array) {
+    let upperCase = array.toUpperCase();
+    return upperCase;
+}
+
+function arrayToLowerCase(array) {
+    let lowerCase = array.toLowerCase();
+    return lowerCase;
+}
+
+console.log("array to lower case", array1.map(arrayToLowerCase));
+
+console.log("array to upper case", array1.map(arrayToUpperCase));
+
+
+
+
+
+let array10 = ["Pippo", "Paperone", "Gambadilegno", "Basettoni", "Clarabella", "Osvaldo"];
+
+let upAndLow = array10.map(item => item === item.toUpperCase() ? item.toLowerCase() : item.toUpperCase());
+
+console.log(upAndLow);
+
+
+
+
+
+var swapCase = function([...array]){
+    var newLetters = " ";
+    for(var i = 0; i < array.length; i++){
+        if(array[i] === array[i].toLowerCase()){
+            newLetters += array[i].toUpperCase();
+        }else {
+            newLetters += array[i].toLowerCase();
+        }
+    }
+    return newLetters;
+}
+
+console.log(swapCase(newArray1));
+
 //filter --> tenga solo le stringhe che contengono "b" ----> poi trasforma in reduce
+
+// let emptyArray = [];
+// function keepStringContainingB(array) {
+//     for (let i = 0; i < array.length; i++) {
+//         const element = array[i];
+//         if (element.includes("b")) {
+//             emptyArray.push(element);
+//         }
+//     }
+//     return emptyArray;
+// }
+
+// console.log(emptyArray);
+// console.log("keep b",newArray1.filter(keepStringContainingB()));
+
+
+
+
+
+
+let p = ["r"];
+
+function keepStringContainingB(array) {
+    return p.some((v) => array.includes(v));
+}
+
+console.log(keepStringContainingB(array1));
+
+console.log(array1.filter(keepStringContainingB));
+
+
 
 
 
