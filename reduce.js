@@ -191,7 +191,7 @@ function checkIfStringContainsVowel5(string) {
 console.log(checkIfStringContainsVowel5(string));         //return: true
 
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 function arrayOfVowels(string) { 
@@ -256,7 +256,7 @@ console.log(array1.reduce(buildVowelArray, []));
 
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //reduce --> stringa con le consonanti senza ripetizione  --> cercare struttura dati SET (insieme) che non accetta duplicati, quindi trasformare l'array in set e poi trasformarlo in stringa
 
@@ -295,7 +295,7 @@ console.log(stringOfConsonants);
 
 
 
-///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //map --> che cambia maiuscole in minuscole e viceversa ----> poi trasforma in reduce
 
@@ -316,7 +316,6 @@ console.log("array to upper case", array1.map(arrayToUpperCase));
 
 
 
-
 let array10 = ["Pippo", "Paperone", "Gambadilegno", "Basettoni", "Clarabella", "Osvaldo"];
 
 let upAndLow = array10.map(item => item === item.toUpperCase() ? item.toLowerCase() : item.toUpperCase());
@@ -324,8 +323,7 @@ let upAndLow = array10.map(item => item === item.toUpperCase() ? item.toLowerCas
 console.log(upAndLow);
 
 
-
-
+//soluzione di internet che però non funziona come dovrebbe: ----> QUESTO PERCHè SERVONO LE REGULAR EXPRESSIONS CHE FAREMO PIù AVANTI!!!!
 
 var swapCase = function([...array]){
     var newLetters = " ";
@@ -341,24 +339,43 @@ var swapCase = function([...array]){
 
 console.log(swapCase(newArray1));
 
+
+
+//*********************** CORREZIONE IN CLASSE:
+
+
+
+function switchCase(string) {
+    const firstChar = string[0];
+    const firstCharLower = firstChar.toLowerCase();
+    const remainingString = string.substring(1);
+    const remainingStringUp = remainingString.toUpperCase();
+
+    return firstCharLower + remainingStringUp;
+}
+
+console.log(array10.map(switchCase));
+
+//IN LAMBDA:
+
+console.log(array10.map((s) => s[0].toLowerCase() + s.substring(1).toUpperCase()));
+
+//CON UNA REDUCE: --> non si dovrebbe usare reduce() ma è per far capire come può sostituire tutte le altre!!
+
+console.log(array10.reduce((p, c) => [...p, switchCase(c)], []));   
+
+//--->al primo giro ho un array vuoto + lo switchcase del primo elemento, al secondo giro ho il primo elemento nell'array vuoto e vado a prendere il secondo, lo switcho e lo passo all'array che contiene il primo elemento ....e così via
+
+// PRIMO GIRO   ----->  p = [] / c = "Pippo"  ==> [p, "pIPPO"];
+// SECONDO GIRO ----->  p = [ "pIPPO"] / c = "Pluto" ==> ["pIPPO", "pLUTO"];
+// TERZO GIRO   ----->  p = ["pIPPO", "pLUTO"] / c = "Paperino" ==> ["pIPPO", "pLUTO", "pAPERINO"];  ...ECC ECC
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //filter --> tenga solo le stringhe che contengono "b" ----> poi trasforma in reduce
-
-// let emptyArray = [];
-// function keepStringContainingB(array) {
-//     for (let i = 0; i < array.length; i++) {
-//         const element = array[i];
-//         if (element.includes("b")) {
-//             emptyArray.push(element);
-//         }
-//     }
-//     return emptyArray;
-// }
-
-// console.log(emptyArray);
-// console.log("keep b",newArray1.filter(keepStringContainingB()));
-
-
-
 
 
 
@@ -374,6 +391,53 @@ console.log(array1.filter(keepStringContainingB));
 
 
 
+
+
+//********************CORREZIONE IN CLASSE:
+
+
+
+function checkIfContains(string) {
+    if (string.includes("r")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+console.log(array1.filter(checkIfContains));
+
+
+//IN LAMBDA:
+
+console.log(array1.filter((s) => s.includes("r")));
+
+//CON LA REDUCE:
+
+console.log(array1.reduce((p, c) => checkIfContains("r") ? [...p, c] : p, []));
+
+
+
+
+//OTTIMIZZAZIONE CODICE:
+
+
+function checkIfContains(string) {
+    return string.toLowerCase().includes("r");
+}
+
+//OPPURE:  --> metodo più generico:
+
+
+function checkIfContainsString(string, stringToCheck) {
+    return string.toLowerCase().includes(stringToCheck);
+}
+
+console.log(checkIfContainsString("pippo", "r"));
+
+console.log(array1.filter((s) => checkIfContainsString(s, "p"))); 
+
+//console.log(array1.filter(checkIfContainsString)); -----> NON SI PUò USARE QUI PERCHè NON POSSO PASSARGLI I PARAMETRI E QUINDI NEMMENO "P"
 
 
 //FOR LOOPS *****************************************************************************************
@@ -479,7 +543,10 @@ let athletes = [athlete1, athlete2, athlete3, athlete4, athlete5];
 
 // athletes.sort((ath1, ath2) => ath1.position - ath2.position);
 
-console.log(athletes.sort());
+console.log(athletes.sort());                          
+
+//NB: IL SORT PRENDERà COME VALID IMPUT L'ULTIMO SCRITTO E DI CONSEGUENZA CAMBIA ANCHE TUTTI I PRECEDENTI E L'OGGETTO DI PARTENZA...
+//PER EVITARE CIò, CONVIENE CREARE UNA COPIA DELL'ARRAY CON [...ARRAY]
 
 
 function compareBySurname(ath1, ath2) {
@@ -514,3 +581,4 @@ function compareByPositionPlus(ath1, ath2) {
 }
 
 console.log(athletes.sort(compareByPositionPlus));
+
